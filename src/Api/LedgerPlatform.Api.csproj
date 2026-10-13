@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Infrastructure\LedgerPlatform.Infrastructure.csproj" />
+    <ProjectReference Include="..\Application\LedgerPlatform.Application.csproj" />
   </ItemGroup>
 
 </Project>

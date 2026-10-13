@@ -1,10 +1,11 @@
+using LedgerPlatform.Application;
 using LedgerPlatform.Domain.Entities;
 using Microsoft.EntityFrameworkCore;
 
 namespace LedgerPlatform.Infrastructure;
 
 
-public class LedgerPlatformDbContext : DbContext
+public class LedgerPlatformDbContext : DbContext, IApplicationDbContext
 {
     public LedgerPlatformDbContext(DbContextOptions<LedgerPlatformDbContext> options) : base(options)
     {

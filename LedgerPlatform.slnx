@@ -3,6 +3,9 @@
   <Folder Name="/src/Api/">
     <Project Path="src/Api/LedgerPlatform.Api.csproj" />
   </Folder>
+  <Folder Name="/src/Application/">
+    <Project Path="src/Application/LedgerPlatform.Application.csproj" />
+  </Folder>
   <Folder Name="/src/Domain/">
     <Project Path="src/Domain/LedgerPlatform.Domain.csproj" />
   </Folder>

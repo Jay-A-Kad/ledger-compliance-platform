@@ -1,19 +1,35 @@
+using System.Reflection;
+using FluentValidation;
+using LedgerPlatform.Application;
 using LedgerPlatform.Infrastructure;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-// Add services to the container.
-// Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
+
+
+
+
 builder.Services.AddOpenApi();
 
+
+//dbcontext
 builder.Services.AddDbContext<LedgerPlatformDbContext>(options =>
     options.UseSqlServer(connectionString));
 
 
+builder.Services.AddScoped<IApplicationDbContext>(provider =>
+    provider.GetRequiredService<LedgerPlatformDbContext>());
+
+//mediatr
+builder.Services.AddMediatR(cfg => cfg.RegisterServicesFromAssembly(typeof(IApplicationDbContext).Assembly));
+
+//fluentValidation
+builder.Services.AddValidatorsFromAssembly(typeof(IApplicationDbContext).Assembly);
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configure the HTTP request pipeline. t shows t
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
