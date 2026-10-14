@@ -11,4 +11,5 @@ public interface IApplicationDbContext
     public DbSet<Transaction> Transactions { get;}
     public DbSet<AccountBalanceProjection> AccountBalanceProjections { get; }
     Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
+    Task<long> GetNextAccountNumberAsync(CancellationToken cancellationToken = default);
 }

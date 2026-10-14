@@ -19,11 +19,18 @@ public class LedgerPlatformDbContext : DbContext, IApplicationDbContext
     public DbSet<Transaction> Transactions { get; set;}
     public DbSet<AccountBalanceProjection> AccountBalanceProjections { get; set;}
 
+    public async Task<long> GetNextAccountNumberAsync(CancellationToken cancellationToken = default)
+    {
+        return await Database.SqlQuery<long>($"SELECT NEXT VALUE for AccountNumberSequence")
+            .FirstAsync(cancellationToken);
+    }
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(LedgerPlatformDbContext).Assembly);
+        modelBuilder.HasSequence<long>("AccountNumberSequence");
     }
     
 
     
-}
+} 

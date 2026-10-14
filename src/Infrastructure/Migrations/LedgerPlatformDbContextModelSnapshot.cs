@@ -22,6 +22,8 @@ namespace LedgerPlatform.Infrastructure.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
 
+            modelBuilder.HasSequence("AccountNumberSequence");
+
             modelBuilder.Entity("LedgerPlatform.Domain.Entities.Account", b =>
                 {
                     b.Property<Guid>("Id")
