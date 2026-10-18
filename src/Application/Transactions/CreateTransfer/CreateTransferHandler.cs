@@ -48,9 +48,9 @@ public class CreateTransferHandler : IRequestHandler<CreateTransfer, Transaction
 
 
         //if it passes then computing sequence number for both
-        var sourceNextSeq = await GetNextSequenceNumberAsync(request.SourceAccountId, cancellationToken);
-        var destNextSeq = await GetNextSequenceNumberAsync(request.DestinationAccountId, cancellationToken);
-
+        var sourceNextSeq = await SequenceNumberHelper.GetNextSequenceNumberAsync(_dbContext, request.SourceAccountId, cancellationToken);
+        var destNextSeq = await SequenceNumberHelper.GetNextSequenceNumberAsync(_dbContext, request.DestinationAccountId, cancellationToken);
+    
 
         var transaction = new Transaction(
             Guid.NewGuid(),
@@ -133,17 +133,6 @@ public class CreateTransferHandler : IRequestHandler<CreateTransfer, Transaction
 
     }
 
-    //next seq number 
-
-     private async Task<long> GetNextSequenceNumberAsync(Guid accountId, CancellationToken cancellationToken)
-    {
-        var maxSeq = await _dbContext.LedgerEvents
-            .Where(e => e.AccountId ==accountId)
-            .Select(e => (long?)e.SequenceNumber)
-            .MaxAsync(cancellationToken);
-
-            return (maxSeq ?? 0) + 1;
-    }
 
 
 }
